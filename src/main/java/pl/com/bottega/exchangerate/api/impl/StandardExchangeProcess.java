@@ -1,5 +1,8 @@
-package pl.com.bottega.exchangerate.api;
+package pl.com.bottega.exchangerate.api.impl;
 
+import pl.com.bottega.exchangerate.api.CalculationResult;
+import pl.com.bottega.exchangerate.api.ExchangeProcess;
+import pl.com.bottega.exchangerate.api.ExchangeRateCalculator;
 import pl.com.bottega.exchangerate.domain.ExchangeRate;
 import pl.com.bottega.exchangerate.domain.ExchangeRateRepository;
 import pl.com.bottega.exchangerate.domain.NoRateException;

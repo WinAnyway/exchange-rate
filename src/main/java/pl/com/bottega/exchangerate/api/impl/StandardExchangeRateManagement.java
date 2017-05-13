@@ -1,11 +1,12 @@
-package pl.com.bottega.exchangerate.api;
+package pl.com.bottega.exchangerate.api.impl;
 
 import org.springframework.transaction.annotation.Transactional;
+import pl.com.bottega.exchangerate.api.ExchangeRateManagement;
 import pl.com.bottega.exchangerate.domain.ExchangeRate;
 import pl.com.bottega.exchangerate.domain.ExchangeRateRepository;
 import pl.com.bottega.exchangerate.domain.commands.DefineRateCommand;
 
-public class StandardExchangeRateManagement implements ExchangeRateManagement{
+public class StandardExchangeRateManagement implements ExchangeRateManagement {
 
     private ExchangeRateRepository exchangeRateRepository;
 
