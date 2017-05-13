@@ -2,9 +2,7 @@ package pl.com.bottega.exchangerate.infrastructure;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import pl.com.bottega.exchangerate.api.ExchangeProcess;
-import pl.com.bottega.exchangerate.api.ExchangeRateCalculator;
-import pl.com.bottega.exchangerate.api.StandardExchangeProcess;
+import pl.com.bottega.exchangerate.api.*;
 import pl.com.bottega.exchangerate.domain.ExchangeRateRepository;
 
 @Configuration
@@ -23,6 +21,11 @@ public class Config {
     @Bean
     public ExchangeRateCalculator exchangeRateCalculator() {
         return new ExchangeRateCalculator();
+    }
+
+    @Bean
+    public ExchangeRateManagement exchangeRateManagement(ExchangeRateRepository exchangeRateRepository) {
+        return new StandardExchangeRateManagement(exchangeRateRepository);
     }
 
 }
