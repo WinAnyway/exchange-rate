@@ -1,6 +1,6 @@
-package pl.com.bottega.exchangerate.api;
+package pl.com.bottega.exchangerate.domain;
 
-import pl.com.bottega.exchangerate.domain.ExchangeRate;
+import pl.com.bottega.exchangerate.api.CalculationResult;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 public class ExchangeRateCalculator {
 
-    private static String MAIN_CURRENCY = "PLN";
+    public static String MAIN_CURRENCY = "PLN";
 
     public CalculationResult calculateRate(ExchangeRate fromRate, ExchangeRate toRate, LocalDate date, BigDecimal amount) {
         BigDecimal calculatedAmount = amount.multiply(fromRate.getRate()).divide(toRate.getRate(), 2, RoundingMode.HALF_UP);

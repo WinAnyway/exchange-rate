@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import pl.com.bottega.exchangerate.api.*;
 import pl.com.bottega.exchangerate.api.impl.StandardExchangeProcess;
 import pl.com.bottega.exchangerate.api.impl.StandardExchangeRateManagement;
+import pl.com.bottega.exchangerate.domain.ExchangeRateCalculator;
 import pl.com.bottega.exchangerate.domain.ExchangeRateRepository;
 
 @Configuration
