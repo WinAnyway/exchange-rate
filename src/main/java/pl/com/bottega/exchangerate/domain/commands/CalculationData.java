@@ -1,23 +1,19 @@
 package pl.com.bottega.exchangerate.domain.commands;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public class CalculationData implements Validatable {
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    LocalDate date;
+    String date;
     String from;
     String to;
     BigDecimal amount;
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -49,11 +45,15 @@ public class CalculationData implements Validatable {
     public void validate(ValidationErrors errors) {
         if (isEmpty(from))
             errors.add("from", "is required");
+        else if (from.equals(to)) {
+            errors.add("from", "must be different than to");
+            errors.add("to", "must be different than from");
+        }
         if (isEmpty(to))
             errors.add("to", "is required");
         if (amount == null)
             errors.add("amount", "is required");
-        if (date == null)
+        if (isEmpty(date))
             errors.add("date", "is required");
     }
 }

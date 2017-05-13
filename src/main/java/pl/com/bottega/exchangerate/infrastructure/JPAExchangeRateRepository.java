@@ -36,7 +36,13 @@ public class JPAExchangeRateRepository implements ExchangeRateRepository {
     @Override
     public ExchangeRate get(String currency, LocalDate date) {
         Query query = entityManager.createQuery("select er from ExchangeRate er where er.currency = :currency and er.date = :date");
-        return (ExchangeRate) query.getSingleResult();
+        query.setParameter("date", date);
+        query.setParameter("currency", currency);
+        List<ExchangeRate> resultList = query.getResultList();
+        if (!resultList.isEmpty())
+            return resultList.get(0);
+        else
+            return null;
     }
 
 }

@@ -1,6 +1,7 @@
 package pl.com.bottega.exchangerate.api;
 
 import org.springframework.transaction.annotation.Transactional;
+import pl.com.bottega.exchangerate.domain.NoRateException;
 import pl.com.bottega.exchangerate.domain.commands.CalculationData;
 import pl.com.bottega.exchangerate.domain.commands.DefineRateCommand;
 import pl.com.bottega.exchangerate.domain.ExchangeRate;
@@ -8,9 +9,11 @@ import pl.com.bottega.exchangerate.domain.ExchangeRateRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-public class StandardExchangeProcess  implements ExchangeProcess{
+public class StandardExchangeProcess implements ExchangeProcess {
 
+    private static final String MAIN_CURRENCY = "PLN";
     ExchangeRateRepository exchangeRateRepository;
     ExchangeRateCalculator calculator;
 
@@ -27,11 +30,29 @@ public class StandardExchangeProcess  implements ExchangeProcess{
 
     @Override
     public CalculationResult calculate(CalculationData calculationData) {
-        LocalDate date = calculationData.getDate();
-        ExchangeRate fromRate = exchangeRateRepository.get(calculationData.getFrom(), date);
-        ExchangeRate toRate = exchangeRateRepository.get(calculationData.getTo(), date);
+        LocalDate date = LocalDate.parse(calculationData.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         BigDecimal amount = calculationData.getAmount();
-        return calculator.calculateRate(fromRate, toRate, date, amount);
+        if (calculationData.getFrom().equals(MAIN_CURRENCY)) {
+            ExchangeRate toRate = exchangeRateRepository.get(calculationData.getTo(), date);
+            ensureExists(toRate);
+            return calculator.calculateFromMainCurrency(toRate, date, amount);
+        } else if (calculationData.getTo().equals(MAIN_CURRENCY)) {
+            ExchangeRate fromRate = exchangeRateRepository.get(calculationData.getFrom(), date);
+            ensureExists(fromRate);
+            return calculator.calculateToMainCurrency(fromRate, date, amount);
+        } else if (!calculationData.getTo().equals(MAIN_CURRENCY) && !calculationData.getFrom().equals(MAIN_CURRENCY)) {
+            ExchangeRate fromRate = exchangeRateRepository.get(calculationData.getFrom(), date);
+            ExchangeRate toRate = exchangeRateRepository.get(calculationData.getTo(), date);
+            ensureExists(fromRate);
+            ensureExists(toRate);
+            return calculator.calculateRate(fromRate, toRate, date, amount);
+        }
+        return null;
+    }
+
+    private void ensureExists(ExchangeRate rate) {
+        if (rate == null)
+            throw new NoRateException();
     }
 
 }
