@@ -12,8 +12,8 @@ import pl.com.bottega.exchangerate.domain.ExchangeRateRepository;
 public class Config {
 
     @Bean
-    public ExchangeProcess exchangeProcess(ExchangeRateRepository exchangeRateRepository, ExchangeRateCalculator exchangeRateCalculator) {
-        return new StandardExchangeProcess(exchangeRateRepository, exchangeRateCalculator);
+    public ExchangeProcess exchangeProcess(ExchangeRateCalculator exchangeRateCalculator) {
+        return new StandardExchangeProcess(exchangeRateCalculator);
     }
 
     @Bean
@@ -22,8 +22,8 @@ public class Config {
     }
 
     @Bean
-    public ExchangeRateCalculator exchangeRateCalculator() {
-        return new ExchangeRateCalculator();
+    public ExchangeRateCalculator exchangeRateCalculator(ExchangeRateRepository exchangeRateRepository) {
+        return new ExchangeRateCalculator(exchangeRateRepository);
     }
 
     @Bean
