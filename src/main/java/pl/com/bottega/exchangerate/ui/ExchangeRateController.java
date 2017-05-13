@@ -4,10 +4,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import pl.com.bottega.exchangerate.api.CalculationData;
+import pl.com.bottega.exchangerate.domain.commands.CalculationData;
 import pl.com.bottega.exchangerate.api.CalculationResult;
 import pl.com.bottega.exchangerate.api.ExchangeProcess;
-import pl.com.bottega.exchangerate.domain.DefineRateCommand;
+import pl.com.bottega.exchangerate.domain.commands.DefineRateCommand;
 
 @RestController
 public class ExchangeRateController {

@@ -1,6 +1,7 @@
 package pl.com.bottega.exchangerate.api;
 
-import pl.com.bottega.exchangerate.domain.DefineRateCommand;
+import pl.com.bottega.exchangerate.domain.commands.CalculationData;
+import pl.com.bottega.exchangerate.domain.commands.DefineRateCommand;
 
 public interface ExchangeProcess {
 
